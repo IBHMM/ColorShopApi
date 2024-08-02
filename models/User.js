@@ -24,6 +24,14 @@ const Use_r = new Schema({
         type: Boolean,
         required: true
     },
+    name: {
+        type: String,
+        required: true 
+    },
+    surname: {
+        type: String,
+        required: true 
+    },
     id: {
         type: String,
         unique: true,
