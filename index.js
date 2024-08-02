@@ -25,7 +25,7 @@ app.use('/api/products', ProductRouter);
 app.use('/api/users', user);
 
 app.get("/", (req, res) => {
-    res.send("Hello World");
+    res.status(200).send("Hello World");
 });
 
 const PORT = process.env.PORT || 4000;
