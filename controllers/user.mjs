@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto';
 import { User } from '../models/User.js';
 
 export const signUp = async (req, res) => {
-    const { email, password, isAdmin } = req.body;
+    const { email, password, isAdmin, name, surname } = req.body;
 
     try {
         const existingUser = await User.findOne({ email });
@@ -12,7 +12,7 @@ export const signUp = async (req, res) => {
 
         const id = Math.random() * 10000000000000;
 
-        const newUser = new User({ email, password, isAdmin, id, card: [], wishlist: [] });
+        const newUser = new User({ email, password, isAdmin, id, card: [], wishlist: [], name, surname });
         await newUser.save();
         
         res.status(201).json({ message: 'User created successfully' });
