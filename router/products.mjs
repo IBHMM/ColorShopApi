@@ -1,5 +1,13 @@
 import { Router } from "express";
-import { DeleteProduct, EditProduct, GetAllBestSellers, GetAllNewArrivals, GetAllProducts, GetProductById, PostProduct } from "../controllers/products.mjs";
+import {
+  DeleteProduct,
+  EditProduct,
+  GetAllBestSellers,
+  GetAllNewArrivals,
+  GetAllProducts,
+  GetProductById,
+  PostProduct,
+} from "../controllers/products.mjs";
 
 const pr = Router();
 
@@ -9,7 +17,7 @@ pr.get("/newarrivals", (req, res) => GetAllNewArrivals(req, res));
 
 pr.get("/bestsellers", (req, res) => GetAllBestSellers(req, res));
 
-pr.get("/:id", (req, res) => GetProductById(req,res));
+pr.get("/:id", (req, res) => GetProductById(req, res));
 
 pr.post("/add", (req, res) => PostProduct(req, res));
 
@@ -19,4 +27,4 @@ pr.delete("/:id", (req, res) => DeleteProduct(req, res));
 
 const ProductRouter = pr;
 
-export {ProductRouter}
+export { ProductRouter };
