@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { DeleteProduct, EditProduct, GetAllProducts, GetProductById, PostProduct } from "../controllers/products.mjs";
+import { DeleteProduct, EditProduct, GetAllNewArrivals, GetAllProducts, GetProductById, PostProduct } from "../controllers/products.mjs";
 
 const pr = Router();
 
 pr.get("/", (req, res) => GetAllProducts(req, res));
+
+pr.get("/newarrivals", (req, res) => GetAllNewArrivals(req, res));
 
 pr.get("/:id", (req, res) => GetProductById(req,res));
 
