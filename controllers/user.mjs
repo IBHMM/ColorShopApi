@@ -91,16 +91,16 @@ export const addToWishlist = async (req, res) => {
 };
 
 export const removeFromCard = async (req, res) => {
-    const { id, productId } = req.body;
+    const { id, product } = req.body;
 
-    if (!id || !productId) {
+    if (!id || !product) {
         return res.status(400).json({ message: 'Invalid input data' });
     }
 
     try {
         const user = await User.findOneAndUpdate(
             { id },
-            { $pull: { card: { id: productId } } },
+            { $pull: { card: { id: product.id } } },
             { new: true }
         );
 
@@ -115,16 +115,16 @@ export const removeFromCard = async (req, res) => {
 };
 
 export const removeFromWishlist = async (req, res) => {
-    const { id, productId } = req.body;
+    const { id, product } = req.body;
 
-    if (!id || !productId) {
+    if (!id || !product) {
         return res.status(400).json({ message: 'Invalid input data' });
     }
 
     try {
         const user = await User.findOneAndUpdate(
             { id },
-            { $pull: { wishlist: { id: productId } } },
+            { $pull: { wishlist: { id: product.id } } },
             { new: true }
         );
 
