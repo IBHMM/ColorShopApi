@@ -93,36 +93,48 @@ export const addToWishlist = async (req, res) => {
 export const removeFromCard = async (req, res) => {
     const { id, productId } = req.body;
 
-    try {
-        const user = await User.findOne({id});
-        if (!user) {
-            return res.status(400).json({ message: 'User not found' });
-        }
+    if (!id || !productId) {
+        return res.status(400).json({ message: 'Invalid input data' });
+    }
 
-        user.card = user.card.filter(pro => pro.id !== productId);
-        await user.save();
+    try {
+        const user = await User.findOneAndUpdate(
+            { id },
+            { $pull: { card: { id: productId } } },
+            { new: true }
+        );
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
 
         res.status(200).json({ message: 'Product removed from card', user });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error', error });
     }
 };
 
 export const removeFromWishlist = async (req, res) => {
     const { id, productId } = req.body;
 
-    try {
-        const user = await User.findOne({id});
-        if (!user) {
-            return res.status(400).json({ message: 'User not found' });
-        }
+    if (!id || !productId) {
+        return res.status(400).json({ message: 'Invalid input data' });
+    }
 
-        user.wishlist = user.wishlist.filter(product => product.id !== productId);
-        await user.save();
+    try {
+        const user = await User.findOneAndUpdate(
+            { id },
+            { $pull: { wishlist: { id: productId } } },
+            { new: true }
+        );
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
 
         res.status(200).json({ message: 'Product removed from wishlist', user });
     } catch (error) {
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error', error });
     }
 };
 
