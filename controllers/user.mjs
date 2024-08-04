@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto';
 import { User } from '../models/User.js';
 
 export const signUp = async (req, res) => {
-    const { email, password, isAdmin, name, surname } = req.body;
+    const { email, password, isAdmin } = req.body;
 
     try {
         const existingUser = await User.findOne({ email });
@@ -12,7 +12,7 @@ export const signUp = async (req, res) => {
 
         const id = Math.random() * 10000000000000;
 
-        const newUser = new User({ email, password, isAdmin, id, card: [], wishlist: [], name, surname });
+        const newUser = new User({ email, password, isAdmin, id, card: [], wishlist: [] });
         await newUser.save();
         
         res.status(201).json({ message: 'User created successfully' });
@@ -43,17 +43,24 @@ export const signIn = async (req, res) => {
 export const addToCard = async (req, res) => {
     const { id, product } = req.body;
 
+    if (!id || !product) {
+        return res.status(400).json({ message: 'User ID and product are required' });
+    }
+
     try {
-        const user = await User.findOneAndUpdate({id});
+        const user = await User.findOneAndUpdate(
+            { id },
+            { $addToSet: { card: product } },
+            { new: true }
+        );
+
         if (!user) {
             return res.status(400).json({ message: 'User not found' });
         }
 
-        user.card.push(product);
-        await user.save();
-
         res.status(200).json({ message: 'Product added to card', user });
     } catch (error) {
+        console.error('Error adding product to card:', error);
         res.status(500).json({ message: 'Server error' });
     }
 };
@@ -61,17 +68,24 @@ export const addToCard = async (req, res) => {
 export const addToWishlist = async (req, res) => {
     const { id, product } = req.body;
 
+    if (!id || !product) {
+        return res.status(400).json({ message: 'User ID and product are required' });
+    }
+
     try {
-        const user = await User.findOne({id});
+        const user = await User.findOneAndUpdate(
+            { id },
+            { $addToSet: { wishlist: product } },
+            { new: true }
+        );
+
         if (!user) {
             return res.status(400).json({ message: 'User not found' });
         }
 
-        user.wishlist.push(product);
-        await user.save();
-
         res.status(200).json({ message: 'Product added to wishlist', user });
     } catch (error) {
+        console.error('Error adding product to wishlist:', error);
         res.status(500).json({ message: 'Server error' });
     }
 };
