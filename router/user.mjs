@@ -5,6 +5,8 @@ const user = Router();
 
 user.post("/signin", (req, res) => signIn(req, res));
 
+user.post("/admin", (req, res) => signInAsAdmin(req, res));
+
 user.post("/signup", (req, res) => signUp(req, res));
 
 user.get("/card/:id", (req, res) => GetCard(req, res));
