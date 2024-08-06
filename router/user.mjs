@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addToCard, addToWishlist, GetCard, GetWishList, removeFromCard, removeFromWishlist, signIn, signUp } from "../controllers/user.mjs";
+import { addToCard, addToWishlist, GetCard, GetWishList, removeFromCard, removeFromWishlist, signIn, signUp, signInAsAdmin } from "../controllers/user.mjs";
 
 const user = Router();
 
