@@ -1,5 +1,3 @@
-﻿# ColorShopApi
-
-
+﻿## ColorShopApi
 
  
